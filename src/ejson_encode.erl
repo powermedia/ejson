@@ -67,7 +67,7 @@ encode1(Tuple, Rules, Opts) when is_tuple(Tuple) andalso
     end;
 encode1(Value, Rules, Opts) when is_list(Value) ->
     [encode1(Val, Rules, Opts) || Val <- Value];
-encode1(Value, _Rules, _Opts) when is_number(Value) orelse is_boolean(Value) ->
+encode1(Value, _Rules, _Opts) when is_number(Value) orelse is_boolean(Value) orelse is_binary(Value) ->
     Value;
 encode1(undefined, _Rules, _Opts) ->
     null.
@@ -261,7 +261,7 @@ generic_rule(AttrName, Value, FieldOpts, Rules, Opts) ->
                         false ->
                             {error, {type_required, AttrName, FieldOpts}};
                         {type, _Type} ->
-                            %% Check if {<<"__rec", Type} there 
+                            %% Check if {<<"__rec", Type} there
                             {ok, {AttrName, AttrList}}
                     end
             end
